@@ -37,18 +37,18 @@ jobs:
 
       - name: Build
         run: |
-          npx presskit build
-          mv ./build ./docs
+          npm run generate
+          mv ./dist ./docs
 
-        - run: |
+      - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add -A
           git commit -m "Add generated static site"
-        - name: GitHub Push
-          uses: ad-m/github-push-action@v0.6.0
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            # Destination branch to push changes
-            branch: "gh-pages"
-            force: true
+      - name: GitHub Push
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Destination branch to push changes
+          branch: "gh-pages"
+          force: true
